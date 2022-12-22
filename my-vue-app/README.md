@@ -5,4 +5,5 @@ Show number with comma
 Remove comma on focus
 Return value to parent without comma
 
-Using Element UI
+npm install
+npm run dev
