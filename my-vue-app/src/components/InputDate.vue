@@ -52,7 +52,9 @@ export default {
       }
     })
   },
-  created: function () {},
+  created: function () {
+    this.date = this.value
+  },
   watch: {
     value(newValue) {
       this.date = newValue
