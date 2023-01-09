@@ -8,7 +8,6 @@
     :value-format="formatter.valueFormat"
     v-model="date"
     @change="updateDate"
-    @focus="typing = true"
   />
 </template>
 <script>
@@ -21,7 +20,6 @@ export default {
   data() {
     return {
       date: '',
-      typing: false,
     }
   },
   props: {
