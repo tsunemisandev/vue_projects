@@ -44,7 +44,6 @@ export default {
         const customParser = this.formatter.parser
         elPicker.parseString = function (value) {
           value = customParser(value)
-          console.log(value)
           return originalParseFunction(value)
         }
       }

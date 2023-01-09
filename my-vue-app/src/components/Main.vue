@@ -12,7 +12,7 @@ export default defineComponent({
       date: '2020-02-01',
       ddMMyyyyformatter: {
         displayFormat: 'dd/MM/yyyy',
-        valueFormat: 'dd-MM-yyyy',
+        valueFormat: 'yyyy-MM-dd',
         parser: function (value) {
           // expects String, Date or an Array of those two
           if (Object.prototype.toString.call(value) === '[object String]') {
@@ -68,7 +68,7 @@ export default defineComponent({
 
 <template>
   <div>
-    <input-date :value="date" :date.sync="date" :formatter="yyyyMMddformatter"></input-date>
+    <input-date :value="date" :date.sync="date" :formatter="ddMMyyyyformatter"></input-date>
     <el-button @click="changeDate">Update date</el-button>
     <el-button @click="printDate">Print date</el-button>
   </div>
