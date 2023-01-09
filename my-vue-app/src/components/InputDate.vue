@@ -4,8 +4,8 @@
     :type="type"
     :size="size"
     :value="value"
-    format="dd/MM/yyyy"
-    value-format="dd-MM-yyyy"
+    :format="formatter.displayFormat"
+    :value-format="formatter.valueFormat"
     v-model="date"
     @change="updateDate"
     @focus="typing = true"
@@ -13,7 +13,6 @@
 </template>
 <script>
 import { DatePicker } from 'element-ui'
-import moment from 'moment'
 
 export default {
   components: {
@@ -29,6 +28,7 @@ export default {
     type: { type: String, default: 'date' },
     size: { type: String, default: 'small' },
     value: { type: String, default: '' },
+    formatter: { type: Object, reqired: true },
   },
   computed: {},
   methods: {
@@ -43,35 +43,20 @@ export default {
         // inject custom date input behavior
 
         const originalParseFunction = elPicker.parseString
+        const customParser = this.formatter.parser
         elPicker.parseString = function (value) {
-          value = expandNumbersToDate(value)
+          value = customParser(value)
           console.log(value)
-          console.log(originalParseFunction(value))
           return originalParseFunction(value)
         }
       }
     })
   },
+  created: function () {},
   watch: {
     value(newValue) {
-      console.log('New ' + newValue)
       this.date = newValue
     },
   },
-}
-
-function expandNumbersToDate(value) {
-  // expects String, Date or an Array of those two
-  if (Object.prototype.toString.call(value) === '[object String]') {
-    var currentMonth = moment().format('MM')
-    var currentYear = moment().format('YYYY')
-    value = value.replace(/^[^\d]*(\d{2})[^\d]*$/, `$1/${currentMonth}/${currentYear}`)
-    value = value.replace(/^[^\d]*(\d{2})(\d{2})[^\d]*$/, `$1/$2/${currentYear}`)
-    value = value.replace(/^[^\d]*(\d{2})\/?(\d{2})\/?(\d{4})[^\d]*$/, '$1/$2/$3')
-  }
-  if (Array.isArray(value)) {
-    value = value.map((date) => expandNumbersToDate(date))
-  }
-  return value
 }
 </script>
